@@ -18,6 +18,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+
   describe 'GET #show'  do
     before {get :show, id: question}
 
@@ -31,6 +32,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   end
 
+
   describe 'GET #new' do
     before {get :new}
 
@@ -42,6 +44,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to render_template :new
     end
   end
+
 
   describe 'GET #edit' do
 
@@ -127,7 +130,5 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
-
-
-
+  
 end
