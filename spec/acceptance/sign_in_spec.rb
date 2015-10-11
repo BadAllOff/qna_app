@@ -1,20 +1,16 @@
 require 'rails_helper'
 # %q - модификатор для многострочного кода
+#save_and_open_page # Сохранит и выведет страницу для просмотра. Гем launchy
 feature 'User sign in', %q{
   In order to be able to ask question
   As an user
   I want to be able to sign in
 } do
 
+  given(:user) {create(:user)}
+
   scenario 'Registered user try to sign in' do
-    User.create(email: 'user@test.com', password: 'password')
-
-    visit new_user_session_path
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password',with: 'password'
-    #save_and_open_page # Сохранит и выведет страницу для просмотра. Гем launchy
-
-    click_on 'Log in'
+    sign_in(user)
 
     expect(page).to have_content 'Signed in successfully.'
     expect(current_path).to eq root_path
