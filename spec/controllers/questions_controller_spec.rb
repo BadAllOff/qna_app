@@ -34,6 +34,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 
   describe 'GET #new' do
+    sign_in_user
     before {get :new}
 
     it 'assigns a new Question to @question' do
@@ -47,7 +48,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 
   describe 'GET #edit' do
-
+    sign_in_user
     before {get :edit, id: question }
 
     it 'assigns the requested question to @question' do
@@ -61,6 +62,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 
   describe 'POST #create' do
+    sign_in_user
     context "with valid attributes" do
       it 'saves new question in the database' do
         expect{ post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
@@ -84,6 +86,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 
   describe 'PATCH #update' do
+    sign_in_user
     context 'valid attributes' do
       it 'assigns the request question to @question' do
         patch :update, id: question, question: attributes_for(:question)
@@ -120,6 +123,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 
   describe 'DELETE #destroy' do
+    sign_in_user
     before { question } # Внизу вызывается метод дестрой, он удалял объект сразу же как создавал. Поэтому надо инициализировать объект заранее в базе
     it 'deletes question' do
       expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
