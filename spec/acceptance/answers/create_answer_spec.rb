@@ -7,9 +7,11 @@ feature "User answer", %q{
   } do
 
   given(:user) {create(:user)}
-  given(:question) {create(:question)}
+  given!(:question) {create(:question)}
+  # Что бы данные РЕАЛЬНО записывались в бд внесите изменения в rails_helper
+  #config.use_transactional_fixtures = FALSE
 
-  scenario 'Authenticated user creates answer' do
+  scenario 'Authenticated user creates answer', js: true do
     sign_in(user)
 
     visit question_path(question)
