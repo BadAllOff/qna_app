@@ -9,23 +9,21 @@ feature "User answer", %q{
   given(:user) {create(:user)}
   given(:question) {create(:question)}
 
-  scenario 'Authenticated user creates question' do
+  scenario 'Authenticated user creates answer' do
     sign_in(user)
-
-
 
     visit question_path(question)
 
-    fill_in 'Your answer', with: 'Answer question'
+    fill_in 'Your answer', with: 'My Answer'
     click_on 'Create'
 
     expect(current_path).to eq question_path(question)
-    within '.answers' do
-      expect(page).to have_content 'Answer question'
+    within '.answers' do # Поределить блок с селектором CSS в котором ответы
+      expect(page).to have_content 'My Answer' # Контент который мы ввели
     end
   end
 
-  scenario 'Non-authenticated user creates question' do
+  scenario 'Non-authenticated user creates answer' do
 
   end
 
