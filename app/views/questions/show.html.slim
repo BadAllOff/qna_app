@@ -7,5 +7,6 @@ p= @question.body
 = form_for [@question, @answer], remote: true do |f|
   .form-group
     =f.label :body, 'Your answer'
+    .answer-errors.text-danger
     =f.text_area :body, class: 'form-control answer_body'
   =f.submit 'Create'
