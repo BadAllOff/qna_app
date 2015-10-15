@@ -25,7 +25,7 @@ feature "User answer", %q{
     end
   end
 
-  scenario 'Non-authenticated user creates answer' do
+  scenario 'User try to create invalid answer', js: true do
 
   end
 

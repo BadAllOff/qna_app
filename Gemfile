@@ -17,8 +17,8 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'selenium-webdriver'
   gem 'database_cleaner'
+  gem 'capybara-webkit'
 end
 
 group :test do
@@ -34,3 +34,4 @@ end
 
 gem 'slim-rails'
 gem 'devise'
+gem 'bootstrap-sass', '~> 3.3.5'

@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.create(question_params)
     if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
+      redirect_to @question, success: 'Your question successfully created.'
     else
       render :new
     end

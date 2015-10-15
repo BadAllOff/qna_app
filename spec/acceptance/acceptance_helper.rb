@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.configure do |config|
+  Capybara.javascript_driver = :webkit
+
   config.include AcceptanceMacros, type: :feature
 
   # Настройки для удаления данных из базы данных после тестирования
