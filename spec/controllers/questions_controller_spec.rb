@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) {create(:question)} # same as @questions = create(:question)

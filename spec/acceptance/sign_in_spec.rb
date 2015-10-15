@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 # %q - модификатор для многострочного кода
 #save_and_open_page # Сохранит и выведет страницу для просмотра. Гем launchy
 feature 'User sign in', %q{
