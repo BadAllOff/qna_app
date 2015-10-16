@@ -24,6 +24,12 @@
           <li class="active"><%= link_to 'Home', root_path %></li>
           <li><a href="execs.html">Executive Team</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <% if user_signed_in? %>
+            <li><%= link_to 'Log out', destroy_user_session_path, method: :DELETE %></li>
+          <% else %>
+            <li><%= link_to 'Log in', new_user_session_path %></li>
+            <li><%= link_to 'Sign in', new_user_registration_path %></li>
+          <% end %>
         </ul>
       </div><!-- end navbar-collapse -->
 
