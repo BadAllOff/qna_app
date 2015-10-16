@@ -7,7 +7,6 @@ feature 'Answer editing', %q{
 } do
 
   given(:user) {create(:user)}
-  given(:user2) {create(:user2)}
   given!(:question) {create(:question)}
   given!(:answer) {create(:answer, question: question)}
 
@@ -29,6 +28,9 @@ feature 'Answer editing', %q{
       end
     end
 
+    scenario "don't sees link to Edit other users answer" do
+      # TODO ДЗ Думаю использовать cancancan
+    end
     scenario 'try to edit his answer', js: true do
       click_on 'Edit'
 
@@ -45,6 +47,9 @@ feature 'Answer editing', %q{
       # TODO ДЗ Думаю использовать cancancan
     end
 
+    scenario "try to edit other user's answer as admin" do
+      # TODO ДЗ Думаю использовать cancancan
+    end
   end
 
 end
