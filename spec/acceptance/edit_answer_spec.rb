@@ -7,6 +7,7 @@ feature 'Answer editing', %q{
 } do
 
   given(:user) {create(:user)}
+  given(:user2) {create(:user2)}
   given!(:question) {create(:question)}
   given!(:answer) {create(:answer, question: question)}
 
