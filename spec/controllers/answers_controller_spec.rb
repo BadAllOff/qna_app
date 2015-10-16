@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe AnswersController do
-  describe "POST #create" do
 
-    let(:question) {create :question}
+  let!(:question) {create :question}
+
+  describe "POST #create" do
 
     context "with valid attributes" do
       it 'saves new answer in the database' do
@@ -25,5 +26,29 @@ describe AnswersController do
         expect(response).to  render_template :create
       end
     end
+  end
+
+  describe 'PATCH #update' do
+    let(:answer) { create(:answer, question: question) }
+      it 'assigns the request answer to @answer' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns the question' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes answer attributes' do
+        patch :update, id: answer, question_id: question, answer: {body: 'New body'}, format: :js
+        answer.reload # Что бы избежать кеширования данных и быть уверенными что только что взяли из БД
+        expect(answer.body).to eq 'New body'
+      end
+
+      it 'render update template' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(response).to render_template :update
+      end
   end
 end
