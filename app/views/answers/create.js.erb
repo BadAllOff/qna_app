@@ -6,3 +6,11 @@
   $('.answers').html('<%= j render 'questions/answers' %>');
   $('.answer_body').val('');
 <% end %>
+
+$('.edit-answer-link').click(function(e) {
+  var answer_id;
+  e.preventDefault();
+  $(this).hide();
+  answer_id = $(this).data('answerId');
+  return $('form#edit-answer-' + answer_id).show();
+});
