@@ -7,6 +7,9 @@
 # Ignore bundler config.
 /.bundle
 
+#Ignore default SQLite database
+/db/*.sqlite3
+
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
@@ -14,3 +17,22 @@
 
 config/database.yml
 .idea
+/doc/examples
+
+# Ignore all uploaded files
+/public/system
+/public/spec
+/public/tmp
+/public/uploads
+
+# coverage files
+/coverage
+
+.powrc
+
+/log
+.powenv
+
+#Ignore application configuration
+/config/application.yml
+.zeus.sock
