@@ -7,7 +7,7 @@ feature 'Add files to answers', %q{
                                } do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:question) { create(:question, user: user) }
 
   background do
     sign_in(user)

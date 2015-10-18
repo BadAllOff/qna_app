@@ -1,10 +1,12 @@
 FactoryGirl.define do
   factory :question do
-    title "MyString"
-    body "MyText"
+    association(:user)
+    title "Question title"
+    body "Question body"
   end
 
   factory :invalid_question, class: "Question" do
+    association(:user)
     title nil
     body nil
   end

@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.create(question_params)
+    @question = User.find(current_user.id).questions.build(question_params)
     if @question.save
       flash[:success] = 'Your question successfully created.'
       redirect_to @question
@@ -41,9 +41,14 @@ class QuestionsController < ApplicationController
 
 
   def destroy
-    @question.destroy
-    flash[:success] = 'Your question successfully deleted.'
-    redirect_to questions_path
+    if @question.user_id == current_user.id
+      @question.destroy
+      flash[:success] = 'Your question successfully deleted.'
+      redirect_to questions_path
+    else
+      flash[:alert] = 'You can\'t delete this question.'
+      redirect_to question_path(@question)
+    end
   end
 
 # методы НЕ являющиеся интерфейсом класса. Вызываемые только внутри

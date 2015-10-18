@@ -6,11 +6,11 @@
       - answer.attachments.each do |a|
         li= link_to a.file.identifier, a.file.url
     -if user_signed_in?
-      p= link_to 'Edit', '#', class:'edit-answer-link', data: {answer_id:  answer.id}
+      p= link_to 'Edit', '#', class:'edit-answer-link btn btn-xs btn-default', data: {answer_id:  answer.id}
       p
         = form_for [@question, answer], class: 'edit_answer', remote: true, html: {id: "edit-answer-#{answer.id}" } do |f|
           .form-group
             = f.label :body, 'Answer'
             = f.text_area :body, class: 'form-control'
-          = f.submit 'Update'
+          = f.submit 'Update', class: 'btn btn-sm btn-default'
     hr

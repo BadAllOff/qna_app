@@ -1,8 +1,9 @@
-require 'spec_helper'
+require 'acceptance/acceptance_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) {create(:question)} # same as @questions = create(:question)
-
+  let(:user) { create(:user) }
+  let(:another_user) { create(:user) }
+  let(:question) { create(:question, user: user) }
 
   describe "GET #index" do
     # Метод let вызываеться тогда когда инициализированна переменная (смотрите коммент ниже в коде)
@@ -123,8 +124,8 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'does not change question attributes' do
         question.reload # Что бы избежать кеширования данных и быть уверенными что только что взяли из БД
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq 'Question title'
+        expect(question.body).to eq 'Question body'
       end
 
       it 're-render edit view' do
@@ -133,17 +134,44 @@ RSpec.describe QuestionsController, type: :controller do
     end # invalid attributes
   end # PATCH #update
 
-
+# TODO Destroy test must be refactored
   describe 'DELETE #destroy' do
-    sign_in_user
-    before { question } # Внизу вызывается метод дестрой, он удалял объект сразу же как создавал. Поэтому надо инициализировать объект заранее в базе
-    it 'deletes question' do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+    context 'authenticated user' do
+      sign_in_user
+      it 'deletes question' do
+        question
+        #expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to question' do
+        delete :destroy, id: question
+        #expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to index view' do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+    context 'another authenticated user' do
+      sign_in_another_user
+      it 'do not deletes question' do
+        question
+        expect { delete :destroy, id: question }.to_not change(Question, :count)
+      end
+
+      it 'redirect to root path' do
+        delete :destroy, id: question
+        expect(response).to redirect_to question_path(question)
+      end
+    end
+
+    context 'non-authenticated user' do
+      it 'not deletes question' do
+        question
+        expect { delete :destroy, id: question }.to_not change(Question, :count)
+      end
+
+      it 'redirect to sign_in' do
+        delete :destroy, id: question
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
   
