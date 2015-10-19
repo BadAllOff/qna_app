@@ -1,4 +1,4 @@
-require 'acceptance/acceptance_helper'
+require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
@@ -148,7 +148,7 @@ RSpec.describe QuestionsController, type: :controller do
     end # invalid attributes
   end # PATCH #update
 
-# TODO Destroy test must be refactored
+# TODO Destroy test must be refactored for authenticated user
   describe 'DELETE #destroy' do
     context 'authenticated user' do
       sign_in_user

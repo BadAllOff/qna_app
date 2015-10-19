@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require 'acceptance/acceptance_helper'
 
 feature 'Add files to answers', %q{
         In order to illustrate my answers

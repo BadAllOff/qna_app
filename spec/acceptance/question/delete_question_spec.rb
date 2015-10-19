@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require 'acceptance/acceptance_helper'
 
 feature "Delete Question", %q{
         Only owner can remove the question

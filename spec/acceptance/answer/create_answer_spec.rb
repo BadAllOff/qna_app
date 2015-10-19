@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require 'acceptance/acceptance_helper'
 
 feature "User answer", %q{
         In order to answer the question from user
