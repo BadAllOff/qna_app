@@ -1,22 +1,23 @@
-h1= @question.title
-p= @question.body
-p Attachments:
-ul
-  - @question.attachments.each do |a|
-    li= link_to a.file.identifier, a.file.url
-- if user_signed_in? && current_user.id == @question.user_id
-  p= link_to 'Delete question', question_path(@question), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
-
+div.question
+  h1= @question.title
+  p= @question.body
+  p Attachments:
+  ul
+    - @question.attachments.each do |a|
+      li= link_to a.file.identifier, a.file.url
+  - if user_signed_in? && current_user.id == @question.user_id
+    p= link_to 'Delete question', question_path(@question), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+  hr.colorgraph
+h4 Comments
+hr
 .answers
-  = render 'questions/answers'
-
-= form_for [@question, @answer], remote: true do |f|
-  .form-group
-    = f.label :body, 'Your answer'
-    .answer-errors.text-danger
-    = f.text_area :body, class: 'form-control answer_body'
-    = f.fields_for :attachments do |a|
-      .form-group
-        = a.label :file
-        = a.file_field :file
-  =f.submit 'Create', class: 'btn btn-default'
+  .answers_list
+    = render 'questions/answers'
+-if user_signed_in?
+  = render 'answers/form'
+-else
+  p.sign_in_to_answer
+    =link_to 'Sign up', new_user_registration_path
+    |&nbsp;to answer, or&nbsp;
+    =link_to 'log in', new_user_session_path
+    |&nbsp;if you already have an account.

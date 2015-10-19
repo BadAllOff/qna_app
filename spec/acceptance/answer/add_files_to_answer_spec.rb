@@ -21,7 +21,7 @@ feature 'Add files to answers', %q{
     click_on 'Create'
 
     expect(current_path).to eq question_path(question)
-    within '.answers' do # Поределить блок с селектором CSS в котором ответы
+    within '.answer_attachments' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
     end
   end

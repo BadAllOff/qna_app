@@ -9,6 +9,10 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
+Capybara::Webkit.configure do |config|
+  config.block_unknown_urls
+end
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   # Хелпер Devise для тестирования аутентифицированных пользователей
