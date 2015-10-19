@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Role sid:
+  = @role.role_sid
+p
+  strong Role title:
+  = @role.role_title
+p
+  strong Role description:
+  = @role.role_description
+
+= link_to 'Edit', edit_role_path(@role)
+'|
+= link_to 'Back', roles_path
