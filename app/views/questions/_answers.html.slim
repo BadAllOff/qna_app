@@ -9,9 +9,9 @@
       .media-body
         p= answer.body
         p Attachments:
-        ul.answer_attachments
+        ul
           - answer.attachments.each do |a|
-            li= link_to a.file.identifier, a.file.url
+            li.answer_attachment= link_to a.file.identifier, a.file.url
     -if user_signed_in?
       p= link_to 'Edit answer', '#', class:'edit-answer-link btn btn-xs btn-default', data: {answer_id:  answer.id}
       p

@@ -21,7 +21,7 @@ feature 'Add files to answers', %q{
     click_on 'Create'
 
     expect(current_path).to eq question_path(question)
-    within '.answer_attachments' do
+    within '.answer_attachment' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
     end
   end
