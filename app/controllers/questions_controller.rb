@@ -41,12 +41,12 @@ class QuestionsController < ApplicationController
 
 
   def destroy
-    if @question.user_id == current_user.id
+    if user_signed_in? && @question.user_id == current_user.id
       @question.destroy
       flash[:success] = 'Your question successfully deleted.'
       redirect_to questions_path
     else
-      flash[:alert] = 'You can\'t delete this question.'
+      flash[:alert] = "You can't delete this question."
       redirect_to question_path(@question)
     end
   end

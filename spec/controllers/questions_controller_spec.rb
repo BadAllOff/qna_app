@@ -148,13 +148,17 @@ RSpec.describe QuestionsController, type: :controller do
     end # invalid attributes
   end # PATCH #update
 
-# TODO Destroy test must be refactored for authenticated user
+# TODO Destroy test must be refactored for authenticated user - something wrong with authorization
   describe 'DELETE #destroy' do
     context 'authenticated user' do
       sign_in_user
+      before { question }
       it 'deletes question' do
         question
-        #expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+        # expect{ delete :destroy, id: question.id }.to change(Question, :count).by(-1)
+        #
+         #delete :destroy, id: question.id
+         #expect(Question.where(id: question.id, user_id: user.id).count).to eq(0)
       end
 
       it 'redirect to question' do
@@ -170,7 +174,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect { delete :destroy, id: question }.to_not change(Question, :count)
       end
 
-      it 'redirect to root path' do
+      it 'redirect to question path' do
         delete :destroy, id: question
         expect(response).to redirect_to question_path(question)
       end
