@@ -43,19 +43,33 @@ RSpec.describe QuestionsController, type: :controller do
 
 
   describe 'GET #new' do
-    sign_in_user
-    before {get :new}
+    context 'authenticated user' do
+      sign_in_user
+      before {get :new}
 
-    it 'assigns a new Question to @question' do
-      expect(assigns(:question)).to be_a_new(Question) #тут мы отправляем саму Модель. так как создаёться новый пустой объект
+      it 'assigns a new Question to @question' do
+        expect(assigns(:question)).to be_a_new(Question) #тут мы отправляем саму Модель. так как создаёться новый пустой объект
+      end
+
+      it 'builds new attachment for question' do
+        expect(assigns(:question).attachments.first).to be_a_new(Attachment)
+      end
+
+      it 'renders new view' do
+        expect(response).to render_template :new
+      end
     end
 
-    it 'builds new attachment for question' do
-      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
-    end
+    context 'Non-authenticated user' do
+      before {get :new}
 
-    it 'renders new view' do
-      expect(response).to render_template :new
+      it 'assigns new Question to @question' do
+        expect(assigns(:question)).to_not be_a_new(Question)
+      end
+
+      it 'renders new user' do
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
 
