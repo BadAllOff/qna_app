@@ -17,12 +17,12 @@ feature 'Add files to answers', %q{
   # TODO implement ability to add multiple files
   scenario 'User adds file when writes answers', js: true do
     fill_in 'Your answer', with: 'My Answer'
-    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+    attach_file 'File', "#{Rails.root}/spec/test_attachments/practice_makes_perfect.jpg"
     click_on 'Create'
 
     expect(current_path).to eq question_path(question)
     within '.answer_attachment' do
-      expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+      expect(page).to have_link 'practice_makes_perfect.jpg', href: '/uploads/attachment/file/1/practice_makes_perfect.jpg'
     end
   end
 
