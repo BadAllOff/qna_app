@@ -17,7 +17,7 @@ feature "Create Role", %q{
     fill_in 'Role sid', with: 'testrole'
     fill_in 'Role title', with: 'Role title'
     fill_in 'Role description', with: 'Role description'
-    click_on 'Create'
+    click_on 'Create Role'
 
     expect(page).to have_content 'Role was successfully created.'
   end

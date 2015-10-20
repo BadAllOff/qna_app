@@ -9,7 +9,8 @@ p
 p
   strong Role description:
   = @role.role_description
-.btn-group
-  = link_to 'Edit', edit_role_path(@role), class: 'btn btn-sm btn-default'
-  = link_to 'Back', roles_path, class: 'btn btn-sm btn-default'
-  = link_to 'Delete', role_path(@role), class: 'btn btn-sm btn-default btn-danger', method: :delete, data: {confirm: 'Are you sure?'}
+- if user_signed_in?
+  .btn-group
+    = link_to 'Edit', edit_role_path(@role), class: 'btn btn-sm btn-default'
+    = link_to 'Back', roles_path, class: 'btn btn-sm btn-default'
+    = link_to 'Delete', role_path(@role), class: 'btn btn-sm btn-default btn-danger', method: :delete, data: {confirm: 'Are you sure?'}
