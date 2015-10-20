@@ -19,6 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe RolesController, type: :controller do
+  let!(:user) { create(:user) }
   let(:role) { create(:role) }
   let(:invalid_role) { create(:invalid_role) }
   # This should return the minimal set of attributes required to create a valid
@@ -57,6 +58,7 @@ RSpec.describe RolesController, type: :controller do
   end
 
   describe "GET #new" do
+    sign_in_user
     it "assigns a new role as @role" do
       get :new
       expect(assigns(:role)).to be_a_new(Role)
@@ -64,6 +66,7 @@ RSpec.describe RolesController, type: :controller do
   end
 
   describe "GET #edit" do
+    sign_in_user
     it "assigns the requested role as @role" do
       get :edit, {:id => role}
       expect(assigns(:role)).to eq(role)
@@ -71,6 +74,7 @@ RSpec.describe RolesController, type: :controller do
   end
 
   describe "POST #create" do
+    sign_in_user
     context "with valid params" do
       it "creates a new Role" do
         expect {
@@ -104,6 +108,7 @@ RSpec.describe RolesController, type: :controller do
   end
 
   describe "PUT #update" do
+    sign_in_user
     context "with valid params" do
       it "updates the requested role" do
         put :update, id: role, role: {role_sid: 'newsid', role_title: 'New title', role_description: 'New description'}
@@ -139,6 +144,7 @@ RSpec.describe RolesController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    sign_in_user
     it "destroys the requested role" do
       role
       expect {
