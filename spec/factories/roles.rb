@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :role do
     role_sid "rolesid"
-    role_title "Role title"
-    role_description "Role description"
+    role_title "Valid Role title"
+    role_description "Valid Role description"
   end
 
   factory :invalid_role, class: "Role" do
