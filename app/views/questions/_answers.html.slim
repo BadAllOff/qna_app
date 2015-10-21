@@ -12,12 +12,13 @@
         ul
           - answer.attachments.each do |a|
             li.answer_attachment= link_to a.file.identifier, a.file.url
-    -if user_signed_in?
-      p= link_to 'Edit answer', '#', class:'edit-answer-link btn btn-xs btn-default', data: {answer_id:  answer.id}
-      p
-        = form_for [@question, answer], class: 'edit_answer', remote: true, html: {id: "edit-answer-#{answer.id}" } do |f|
-          .form-group
-            = f.label :body, 'Answer'
-            = f.text_area :body, class: 'form-control'
-          = f.submit 'Update answer', class: 'btn btn-sm btn-default'
+    -if user_signed_in? && answer.user_id == current_user.id
+      .btn-group.answer_options
+        = link_to 'Edit answer', '#', class:'edit-answer-link btn btn-xs btn-default', data: {answer_id:  answer.id}
+        = link_to 'Delete answer', [@question, answer], method: :delete, remote: true, data: {confirm: 'Are you sure?'}, class: 'delete-answer-link btn btn-xs btn-danger'
+      p= form_for [@question, answer], class: 'edit_answer', remote: true, html: {id: "edit-answer-#{answer.id}" } do |f|
+        .form-group
+          = f.label :body, 'Edit your answer:'
+          = f.text_area :body, class: 'form-control'
+        = f.submit 'Update answer', class: 'btn btn-sm btn-default'
     hr

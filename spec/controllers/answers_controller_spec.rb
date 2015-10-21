@@ -56,4 +56,32 @@ describe AnswersController do
         expect(response).to render_template :update
       end
   end
+
+  describe 'DELETE #destroy' do
+    context 'authenticated user' do
+      sign_in_user
+      it 'deletes answer' do
+        answer
+        expect { delete :destroy, id: answer, question_id: question, format: :js }.to change(Answer, :count).by(-1)
+      end
+
+      it 'render destroy template' do
+        delete :destroy, id: answer, question_id: question, format: :js
+        expect(response).to render_template :destroy
+      end
+    end
+
+    context 'non-authenticated user' do
+      it 'not deletes answer' do
+        answer
+        expect { delete :destroy, id: answer, question_id: question, format: :js }.to_not change(Answer, :count)
+      end
+
+      it 'redirect to sign_in' do
+        delete :destroy, id: answer, question_id: question
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+  end
 end
