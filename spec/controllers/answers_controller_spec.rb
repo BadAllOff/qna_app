@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe AnswersController do
 
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:answer) { create(:answer, question: question, user: user) }
 
@@ -33,7 +33,7 @@ describe AnswersController do
   end
 
   describe 'PATCH #update' do
-    sign_in_user
+    before {sign_in(user)}
     #let!(:answer) { create(:answer, question: question) }
       it 'assigns the request answer to @answer' do
         patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
@@ -59,7 +59,7 @@ describe AnswersController do
 
   describe 'DELETE #destroy' do
     context 'authenticated user' do
-      sign_in_user
+      before{sign_in(user)}
       it 'deletes answer' do
         answer
         expect { delete :destroy, id: answer, question_id: question, format: :js }.to change(Answer, :count).by(-1)

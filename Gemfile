@@ -32,6 +32,6 @@ end
 gem 'slim-rails'
 gem 'devise'
 gem 'carrierwave'
-# gem 'cancancan', '~> 1.10'
+gem 'cancancan', '~> 1.10'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'remotipart'

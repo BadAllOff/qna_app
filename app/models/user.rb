@@ -5,4 +5,13 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+
+  def admin?
+    self.role_sid == 'admin'
+  end
+
+  def vizitor?
+    self.role_sid == "vizitor"
+  end
 end

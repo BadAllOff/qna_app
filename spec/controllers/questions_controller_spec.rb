@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:user) { create(:user) }
-  let(:another_user) { create(:user) }
+  let!(:user) { create(:user) }
+  let!(:another_user) { create(:user) }
   let(:question) { create(:question, user: user) }
 
   describe "GET #index" do
@@ -75,7 +75,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 
   describe 'GET #edit' do
-    sign_in_user
+    before {sign_in(user)}
     before {get :edit, id: question }
 
     it 'assigns the requested question to @question' do
@@ -113,7 +113,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 
   describe 'PATCH #update' do
-    sign_in_user
+    before {sign_in(user)}
     context 'valid attributes' do
       it 'assigns the request question to @question' do
         patch :update, id: question, question: attributes_for(:question)
@@ -151,43 +151,41 @@ RSpec.describe QuestionsController, type: :controller do
 # TODO Destroy test must be refactored for authenticated user - something wrong with authorization
   describe 'DELETE #destroy' do
     context 'authenticated user' do
-      sign_in_user
-      before { question }
+      before {sign_in(user)}
+      subject(:ability){ Ability.new(user) }
       it 'deletes question' do
         question
-        # expect{ delete :destroy, id: question.id }.to change(Question, :count).by(-1)
-        #
-         #delete :destroy, id: question.id
-         #expect(Question.where(id: question.id, user_id: user.id).count).to eq(0)
+        expect{ delete :destroy, id: question.id }.to change(Question, :count).by(-1)
       end
 
       it 'redirect to question' do
-        delete :destroy, id: question
-        #expect(response).to redirect_to questions_path
+        question
+        delete :destroy, id: question.id
+        expect(response).to redirect_to questions_path
       end
     end
 
     context 'another authenticated user' do
-      sign_in_another_user
+      before {sign_in(another_user)}
       it 'do not deletes question' do
         question
-        expect { delete :destroy, id: question }.to_not change(Question, :count)
+        expect { delete :destroy, id: question.id }.to_not change(Question, :count)
       end
 
       it 'redirect to question path' do
-        delete :destroy, id: question
-        expect(response).to redirect_to question_path(question)
+        delete :destroy, id: question.id
+        expect(response).to redirect_to root_path
       end
     end
 
     context 'non-authenticated user' do
       it 'not deletes question' do
         question
-        expect { delete :destroy, id: question }.to_not change(Question, :count)
+        expect { delete :destroy, id: question.id }.to_not change(Question, :count)
       end
 
       it 'redirect to sign_in' do
-        delete :destroy, id: question
+        delete :destroy, id: question.id
         expect(response).to redirect_to new_user_session_path
       end
     end
