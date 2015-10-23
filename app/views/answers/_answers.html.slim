@@ -1,0 +1,54 @@
+-@question.answers.each do |answer|
+  -if answer.persisted?
+    .media.answer[id="answer-#{answer.id}"]
+      .col-xs-2
+        ul.list-unstyled
+          li.text-center
+            = link_to '#', class: 'btn btn-xs' do
+              i.glyphicon.glyphicon-chevron-up
+              'Vote up
+          li.text-center
+            = rand 10
+          li.text-center
+            = link_to '#', class: 'btn btn-xs' do
+              i.glyphicon.glyphicon-chevron-down
+              'Vote down
+          li.text-center
+            -if answer.best_answer
+              'Best answer
+              -if can? :cancel_best, answer
+                = link_to cancel_best_question_answer_path(@question, answer), method: :patch, remote: true, class: 'btn btn-xs btn-info' do
+                  i.glyphicon.glyphicon-star
+                  'Cancel accept answer
+            -else
+              -if can? :set_best, answer
+                = link_to set_best_question_answer_path(@question, answer), method: :patch, remote: true, class: 'btn btn-xs btn-default' do
+                  i.glyphicon.glyphicon-star-empty
+                  'Accept answer
+      .col-xs-9
+        p.pull-right
+          small
+            = time_ago_in_words(answer.created_at, include_seconds: true)
+        = link_to '#', class: 'media-left' do
+          = image_tag 'http://lorempixel.com/40/40/people/1/', alt: 'user'
+        .media-body
+          p
+            i.glyphicon.glyphicon-user
+            '&nbsp
+            =answer.user.email
+          p= answer.body
+          - if answer.attachments.any?
+            p Attachments:
+            ul
+              - answer.attachments.each do |a|
+                li.answer_attachment= link_to a.file.identifier, a.file.url
+    -if can? :update, answer
+      .btn-group.answer_options
+        = link_to 'Edit answer', '#', class:'edit-answer-link btn btn-xs btn-default', data: {answer_id:  answer.id}
+        = link_to 'Delete answer', [@question, answer], method: :delete, remote: true, data: {confirm: 'Are you sure?'}, class: 'delete-answer-link btn btn-xs btn-danger'
+      p= form_for [@question, answer], class: 'edit_answer', remote: true, html: {id: "edit-answer-#{answer.id}" } do |f|
+        .form-group
+          = f.label :body, 'Edit your answer:'
+          = f.text_area :body, class: 'form-control'
+        = f.submit 'Update answer', class: 'btn btn-sm btn-default'
+    hr
