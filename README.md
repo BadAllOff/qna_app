@@ -1,5 +1,6 @@
 # Questions and answers application (TDD|BDD)
 [![volkswagen status](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen)
+
 This app based on main idea of stackowerflow: people can ask questions and create answers for them, created for lerning how some gems and technologies works.
 Features:
 
