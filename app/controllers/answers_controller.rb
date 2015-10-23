@@ -2,9 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
   before_action :load_answer, except: [:create]
-
   authorize_resource
-  # before_action :load_answer, except: [:create]
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))
@@ -16,6 +14,16 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
+  end
+
+  def set_best
+    @answer.set_best
+    render 'answers/create'
+  end
+
+  def cancel_best
+    @answer.cancel_best
+    render 'answers/create'
   end
 
   private

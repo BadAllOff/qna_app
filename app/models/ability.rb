@@ -24,6 +24,15 @@ class Ability
       can :destroy, Answer do |item|
         item.try(:user) == user
       end
+
+      can [:set_best], Answer do |answer|
+        answer.question.user == user && !answer.best_answer
+      end
+
+      can [:cancel_best], Answer do |answer|
+        answer.question.user == user && answer.best_answer
+      end
+
     else
       can :read, :all
     end
