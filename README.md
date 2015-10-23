@@ -2,107 +2,109 @@
 [![volkswagen status](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen)
 
 This app based on main idea of stackowerflow: people can ask questions and create answers for them, created for lerning how some gems and technologies works.
-Features:
 
-Actions mostly works without reload (ajax) New records appears on page without reload for all users (comet) Faye through private pub
+### Features:
 
-NOT DONE!
+**Actions mostly works without reload (ajax) New records appears on page without reload for all users (comet) Faye through private pub**
 
-    gem 'private_pub'
-    gem 'thin'
+**note done**
 
-Authentication with Facebook & Twitter
+  - gem 'private_pub'
+  - gem 'thin'
 
-NOT DONE!
+**Authentication with Facebook & Twitter**
 
-    gem 'devise'
-    gem 'omniauth'
+**note done**
 
-Authorization with Policies
+  - gem 'devise'
+  - gem 'omniauth'
 
-    gem 'cancancan'
+**Authorization with Policies**
 
-App has REST API
+  - gem 'cancancan'
 
-NOT DONE!
+**App has REST API**
 
-    gem 'doorkeeper'
-    gem 'active_model_serializers'
+**note done**
 
-Attach files to questions/answers
+  - gem 'doorkeeper'
+  - gem 'active_model_serializers'
 
-    gem 'carrierwave'
+**Attach files to questions/answers**
 
-Background jobs (like email)
+  - gem 'carrierwave'
 
-NOT DONE!
+**Background jobs (like email)**
 
-    gem 'sidekiq'
-    gem 'whenever'
-    ActiveJob
+**note done**
 
-Redis for sidekiq and caching
+  - gem 'sidekiq'
+  - gem 'whenever'
+  - ActiveJob
 
-NOT DONE!
+**Redis for sidekiq and caching**
 
-    Fragment caching (Russian doll caching)
-    gem 'redis-rails'
+**note done**
 
-Sphinx search
+  - Fragment caching (Russian doll caching)
+  - gem 'redis-rails'
 
-NOT DONE!
+**Sphinx search**
 
-    gem 'thinking-sphinx'
+**note done**
 
-Test Driven Developed more than 400 Rspec tests examples written before code
+  - gem 'thinking-sphinx'
 
-    gem 'rspec-rails'
-    gem 'factory_girl_rails'
-    gem 'shoulda-matchers'
+**Test Driven Developed more than 400 Rspec tests examples written before code**
 
-Feature (acceptance) testing with JS
+  - gem 'rspec-rails'
+  - gem 'factory_girl_rails'
+  - gem 'shoulda-matchers'
 
-    gem 'capybara'
-    gem 'capybara-webkit'
+**Feature (acceptance) testing with JS**
 
-Views written on Slim & Bootstrap
+  - gem 'capybara'
+  - gem 'capybara-webkit'
 
-    gem 'slim'
-    gem 'bootstrap-sass'
+**Views written on Slim & Bootstrap**
 
-PostgreSQL as main db
+  - gem 'slim'
+  - gem 'bootstrap-sass'
 
-    gem 'pg'
+**PostgreSQL as main db**
 
-Ready to Deploy
+  - gem 'pg'
 
-NOT DONE!
+**Ready to Deploy**
 
-    gem 'capistrano'
-    gem 'therubyracer'
+**note done**
 
-Unicorn as production webserver
+  - gem 'capistrano'
+  - gem 'therubyracer'
 
-NOT DONE!
+**Unicorn as production webserver**
 
-    gem 'unicorn'
+**note done**
 
-Ruby version
+  - gem 'unicorn'
 
-    ruby 2.2.1
+### Ruby version
 
-Services (job queues, cache servers, search engines, etc.)
+  - ruby 2.2.1
 
-NOT DONE!
 
-    Postgres
-    Redis
-    Sidekiq
-    PrivatePub(thin)
-    Sphinx
+### Services (job queues, cache servers, search engines, etc.)
 
-Deployment instructions
+**note done**
 
-NOT DONE!
+  - Postgres
+  - Redis
+  - Sidekiq
+  - PrivatePub(thin)
+  - Sphinx
 
-    cap production deploy
+### Deployment instructions
+
+**note done**
+
+  - cap production deploy
