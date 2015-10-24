@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
 
   def cancel_best
     @answer.cancel_best
-    render 'answers/create'
+    render 'answers/update'
   end
 
   private
