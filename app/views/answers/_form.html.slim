@@ -4,7 +4,5 @@
     .answer-errors.text-danger
     = f.text_area :body, class: 'form-control answer_body'
     = f.fields_for :attachments do |a|
-      .form-group
-        = a.label :file
-        = a.file_field :file
+      = render 'attachments/form', f: a
   =f.submit 'Create answer', class: 'btn btn-default'

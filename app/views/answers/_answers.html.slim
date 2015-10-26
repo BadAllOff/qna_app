@@ -38,10 +38,7 @@
             =answer.user.email
           p= answer.body
           - if answer.attachments.any?
-            p Attachments:
-            ul
-              - answer.attachments.each do |a|
-                li.answer_attachment= link_to a.file.identifier, a.file.url
+            = render 'attachments/show', attachments: answer.attachments
     -if can? :update, answer
       .btn-group.answer_options
         = link_to 'Edit answer', '#', class:'edit-answer-link btn btn-xs btn-default', data: {answer_id:  answer.id}

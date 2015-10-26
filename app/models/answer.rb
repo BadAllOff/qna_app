@@ -1,10 +1,10 @@
 class Answer < ActiveRecord::Base
   belongs_to :question
   belongs_to :user
-  has_many :attachments, as: :attachable
+  has_many :attachments, as: :attachable, dependent: :destroy
   validates :body, presence: true
 
-  accepts_nested_attributes_for :attachments #Дабы сохранять данные в дочерний обект через родительский
+  accepts_nested_attributes_for :attachments, reject_if: lambda {|a| a[:file].blank? }, allow_destroy: true #Дабы сохранять данные в дочерний обект через родительский
 
   default_scope { order('best_answer DESC, created_at') }
 

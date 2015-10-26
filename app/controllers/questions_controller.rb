@@ -52,6 +52,6 @@ class QuestionsController < ApplicationController
 
   def question_params
     # Для вложенных параметров ОБЪЯЗАТЕЛЬНО должен быть указан массив допустимых параметров
-    params.require(:question).permit(:title, :body, attachments_attributes: [:file])
+    params.require(:question).permit(:title, :body, attachments_attributes: [:file, :_destroy ])
   end
 end
