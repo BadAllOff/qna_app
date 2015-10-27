@@ -29,12 +29,7 @@ feature 'Role editing', %q{
 
     scenario 'try to edit role' do
       click_on 'Edit'
-        fill_in 'Role sid', with: 'testrole'
-        fill_in 'Role title', with: 'Role title'
-        fill_in 'Role description', with: 'Role description'
-        click_on 'Update Role'
-        expect(page).to_not have_content role.role_sid
-        expect(page).to have_content 'Role was successfully updated.'
+        expect(page).to have_content 'Action prohibited!'
       end
     end
 

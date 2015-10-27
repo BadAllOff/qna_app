@@ -6,7 +6,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
-    elsif user.vizitor?
+    elsif user.user?
       can :read, Question
       can :create, Question
       can :update, Question do |item|
@@ -33,8 +33,11 @@ class Ability
         answer.question.user == user && answer.best_answer
       end
 
+      can :read, Role
+
     else
-      can :read, :all
+      can :read, Question
+      can :read, Answer
     end
 
     # Define abilities for the passed in user here. For example:

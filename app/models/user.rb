@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
     self.role_sid == 'admin'
   end
 
-  def vizitor?
-    self.role_sid == "vizitor"
+  def user?
+    self.role_sid == 'user'
   end
 end

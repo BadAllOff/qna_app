@@ -2,14 +2,14 @@ require 'rails_helper'
 
 describe AnswersController do
 
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, role_sid: 'user') }
   let!(:another_user) { create(:user) }
-  let(:question) { create(:question, user: user) }
-  let(:answer) { create(:answer, question: question, user: user) }
+  let (:question) { create(:question, user: user) }
+  let (:answer) { create(:answer, question: question, user: user) }
 
   describe "POST #create" do
     context 'authenticated user' do
-      sign_in_user
+      before {sign_in(user)}
       context "with valid attributes" do
         it 'saves new answer in the database' do
           #Изменилось кол-во ответов для КОНКРЕТНОГО вопроса
@@ -17,7 +17,8 @@ describe AnswersController do
         end
         it 'render create template' do
           post :create, answer: attributes_for(:answer), question_id: question, format: :js
-          expect(response).to render_template :create
+          #it { should render_template(:partial => '_partialname') }
+          expect(response).to render_template('create')
         end
       end
 
@@ -27,7 +28,7 @@ describe AnswersController do
         end
         it 'redirects to questions show view' do
           post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js
-          expect(response).to  render_template :create
+          expect(response).to  render_template('create')
         end
       end
     end

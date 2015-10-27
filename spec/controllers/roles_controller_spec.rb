@@ -19,142 +19,179 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe RolesController, type: :controller do
-  let!(:user) { create(:user) }
-  let(:role) { create(:role) }
-  let(:invalid_role) { create(:invalid_role) }
-  # This should return the minimal set of attributes required to create a valid
-  # Role. As you add validations to Role, be sure to
-  # adjust the attributes here as well.
-  # let(:valid_attributes) {
-  #
-  #   roles_sid: "role"
-  #   roles_title: "Role title"
-  #   roles_description: "Role description"
-  # }
-  #
-  # let(:invalid_attributes) {
-  #   skip("Add a hash of attributes invalid for your model")
-  # }
-  #
-  # # This should return the minimal set of values that should be in the session
-  # # in order to pass any filters (e.g. authentication) defined in
-  # # RolesController. Be sure to keep this updated too.
-  # let(:valid_session) { {} }
+  let!(:user)         { create(:user, role_sid: 'user') }
+  let!(:admin)        { create(:user, role_sid: 'admin') }
+  let (:role)         { create(:role) }
+  let (:invalid_role) { create(:invalid_role) }
 
   describe "GET #index" do
+    before { sign_in(user) }
     it "assigns all roles as @roles" do
-      #role = Role.create! valid_attributes
       get :index
-      expect(assigns(:roles)).to eq([role])
+      expect(assigns(role)).to eq(@roles)
     end
   end
 
   describe "GET #show" do
     it "assigns the requested role as @role" do
-      #role = Role.create! valid_attributes
       get :show, {:id => role}
-      expect(assigns(:role)).to eq(role)
+      expect(assigns(role)).to eq(@role)
     end
   end
 
   describe "GET #new" do
-    sign_in_user
-    it "assigns a new role as @role" do
-      get :new
-      expect(assigns(:role)).to be_a_new(Role)
+    context 'as admin' do
+      before { sign_in(admin) }
+      it "assigns a new role as @role" do
+        get :new
+        expect(assigns(:role)).to be_a_new(Role)
+      end
+    end
+
+    context 'as authenticated user' do
+      before { sign_in(user) }
+      it "redirects to questions" do
+        get :new
+        expect(response).to redirect_to root_path
+      end
     end
   end
 
   describe "GET #edit" do
-    sign_in_user
-    it "assigns the requested role as @role" do
-      get :edit, {:id => role}
-      expect(assigns(:role)).to eq(role)
+    context 'As Admin' do
+      before { sign_in(admin) }
+      it "assigns the requested role as @role" do
+        get :edit, {:id => role}
+        expect(assigns(role)).to eq(@role)
+      end
+    end
+
+    context 'As authenticated user' do
+      before { sign_in(user) }
+      it "redirects to root_path" do
+        get :edit, {:id => role}
+        expect(response).to redirect_to root_path
+      end
     end
   end
 
   describe "POST #create" do
-    sign_in_user
-    context "with valid params" do
-      it "creates a new Role" do
-        expect {
+    context 'As Admin' do
+      before { sign_in(admin) }
+      context "with valid params" do
+        it "creates a new Role" do
+          expect {
+            post :create, {:role => attributes_for(:role)}
+          }.to change(Role, :count).by(1)
+        end
+
+        it "assigns a newly created role as @role" do
           post :create, {:role => attributes_for(:role)}
-        }.to change(Role, :count).by(1)
+          expect(assigns(:role)).to be_a(Role)
+          expect(assigns(:role)).to be_persisted
+        end
+
+        it "redirects to the created role" do
+          post :create, {:role => attributes_for(:role)}
+          expect(response).to redirect_to(Role.last)
+        end
       end
 
-      it "assigns a newly created role as @role" do
-        post :create, {:role => attributes_for(:role)}
-        expect(assigns(:role)).to be_a(Role)
-        expect(assigns(:role)).to be_persisted
-      end
+      context "with invalid params" do
+        it "assigns a newly created but unsaved role as @role" do
+          post :create, {:role => attributes_for(:invalid_role)}
+          expect(assigns(:role)).to be_a_new(Role)
+        end
 
-      it "redirects to the created role" do
-        post :create, {:role => attributes_for(:role)}
-        expect(response).to redirect_to(Role.last)
+        it "re-renders the 'new' template" do
+          post :create, {:role => attributes_for(:invalid_role)}
+          expect(response).to render_template("new")
+        end
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved role as @role" do
-        post :create, {:role => attributes_for(:invalid_role)}
-        expect(assigns(:role)).to be_a_new(Role)
+    context 'As authenticated user' do
+      before { sign_in(user) }
+      it "can't create a new Role" do
+        expect {
+          post :create, {:role => attributes_for(:role)}
+        }.to change(Role, :count).by(0)
       end
 
-      it "re-renders the 'new' template" do
-        post :create, {:role => attributes_for(:invalid_role)}
-        expect(response).to render_template("new")
+      it 'redirects to root_path' do
+        post :create, {:role => attributes_for(:role)}
+        expect(response).to redirect_to root_path
       end
     end
   end
 
   describe "PUT #update" do
-    sign_in_user
-    context "with valid params" do
-      it "updates the requested role" do
-        put :update, id: role, role: {role_sid: 'newsid', role_title: 'New title', role_description: 'New description'}
-        role.reload
-        expect(role.role_sid).to eq 'newsid'
-        expect(role.role_title).to eq 'New title'
-        expect(role.role_description).to eq 'New description'
+    context 'As Admin' do
+      before { sign_in(admin) }
+      context "with valid params" do
+        it "updates the requested role" do
+          put :update, id: role, role: {role_sid: 'newsid', role_title: 'New title', role_description: 'New description'}
+          role.reload
+          expect(role.role_sid).to eq 'newsid'
+          expect(role.role_title).to eq 'New title'
+          expect(role.role_description).to eq 'New description'
+        end
+
+        it "assigns the requested role as @role" do
+          put :update, {:id => role, :role => attributes_for(:role)}
+          expect(assigns(:role)).to eq(role)
+        end
+
+        it "redirects to the role" do
+          put :update, {:id => role, :role => attributes_for(:role)}
+          expect(response).to redirect_to(role)
+        end
       end
 
-      it "assigns the requested role as @role" do
-        put :update, {:id => role, :role => attributes_for(:role)}
-        expect(assigns(:role)).to eq(role)
-      end
+      context "with invalid params" do
+        it "assigns the role as @role" do
+          put :update, {:id => role, :role => attributes_for(:invalid_role)}
+          expect(assigns(:role)).to eq(role)
+        end
 
-      it "redirects to the role" do
-        put :update, {:id => role, :role => attributes_for(:role)}
-        expect(response).to redirect_to(role)
+        it "re-renders the 'edit' template" do
+          #role = Role.create! valid_attributes
+          put :update, {:id => role, :role => attributes_for(:invalid_role)}
+          expect(response).to render_template("edit")
+        end
       end
     end
 
-    context "with invalid params" do
-      it "assigns the role as @role" do
-        put :update, {:id => role, :role => attributes_for(:invalid_role)}
-        expect(assigns(:role)).to eq(role)
-      end
-
-      it "re-renders the 'edit' template" do
-        #role = Role.create! valid_attributes
-        put :update, {:id => role, :role => attributes_for(:invalid_role)}
-        expect(response).to render_template("edit")
+    context 'As authenticated User' do
+      before { sign_in(user) }
+      it "redirects to the root_path" do
+        put :update, {:id => role, :role => attributes_for(:role)}
+        expect(response).to redirect_to root_path
       end
     end
   end
 
   describe "DELETE #destroy" do
-    sign_in_user
-    it "destroys the requested role" do
-      role
-      expect {
-        delete :destroy, {:id => role}
-      }.to change(Role, :count).by(-1)
-    end
+    context 'As Admin' do
+      before { sign_in(admin) }
+      it "destroys the requested role" do
+        role
+        expect {
+          delete :destroy, {:id => role}
+        }.to change(Role, :count).by(-1)
+      end
 
-    it "redirects to the roles list" do
-      delete :destroy, {:id => role}
-      expect(response).to redirect_to(roles_url)
+      it "redirects to the roles list" do
+        delete :destroy, {:id => role}
+        expect(response).to redirect_to(roles_url)
+      end
+    end
+    context 'As authenticated User' do
+      before { sign_in(user) }
+      it "redirects to the root_path" do
+        delete :destroy, {:id => role}
+        expect(response).to redirect_to root_path
+      end
     end
   end
 

@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  load_and_authorize_resource
+  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  authorize_resource
 
   def index
     @questions = Question.all
@@ -49,6 +50,9 @@ class QuestionsController < ApplicationController
 # методы НЕ являющиеся интерфейсом класса. Вызываемые только внутри
   private
 # protected если полагаеться наследование
+  def set_question
+    @question = Question.find(params[:id])
+  end
 
   def question_params
     # Для вложенных параметров ОБЪЯЗАТЕЛЬНО должен быть указан массив допустимых параметров

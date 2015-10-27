@@ -2,15 +2,16 @@ require 'acceptance/acceptance_helper'
 
 feature "Create Role", %q{
         In order to create and set roles
-        As an authenticated user
+        As an Admin
         I want be able to create roles
   } do
 
-  given(:user) {create(:user)}
+  given(:admin) { create(:user, role_sid: 'admin') }
+  given(:user)  { create(:user, role_sid: 'user') }
 
-  scenario 'Authenticated user creates role' do
+  scenario 'Admin creates role' do
 
-    sign_in(user)
+    sign_in(admin)
 
     visit roles_path
     click_on 'New Role'
@@ -22,11 +23,17 @@ feature "Create Role", %q{
     expect(page).to have_content 'Role was successfully created.'
   end
 
-  scenario 'Non-authenticated user creates question' do
+  scenario 'Authenticated User cannot create role' do
+    sign_in(user)
+
     visit roles_path
     click_on 'New Role'
+    expect(page).to have_content 'Action prohibited!'
+  end
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+  scenario 'Non-authenticated user cannot create role' do
+    visit roles_path
+    expect(page).to have_content 'Action prohibited!'
   end
 
 

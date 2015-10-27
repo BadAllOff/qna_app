@@ -4,12 +4,12 @@ feature "Delete Role", %q{
         Only user can remove the role
   } do
 
-  given!(:user) { create(:user) }
-  given(:role) { create(:role) }
+  given(:admin) { create(:user, role_sid: 'admin') }
+  given(:user)  { create(:user, role_sid: 'user') }
+  given(:role)  { create(:role) }
 
-
-  scenario 'Authenticated user delete role' do
-    sign_in(user)
+  scenario 'Admin delete role' do
+    sign_in(admin)
 
     visit role_path(role)
     click_on 'Delete'
@@ -19,16 +19,19 @@ feature "Delete Role", %q{
     expect(current_path).to eq roles_path
   end
 
-  # scenario 'Authenticated user cannot delete foreign role' do
-  #   sign_in(another_user)
-  #   visit role_path(role)
-  #
-  #   expect(page).to_not have_content 'Delete role'
-  # end
+  scenario 'Authenticated user cannot delete role' do
+    sign_in(user)
+
+    visit role_path(role)
+    click_on 'Delete'
+
+    expect(page).to have_content 'Action prohibited!'
+    expect(current_path).to eq root_path
+  end
 
   scenario 'Non-authenticated user cannot delete role' do
     visit role_path(role)
-
-    expect(page).to_not have_content 'Delete role'
+    expect(current_path).to eq root_path
+    expect(page).to have_content 'Action prohibited!'
   end
 end
