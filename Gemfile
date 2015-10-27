@@ -13,6 +13,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'slim-rails'
 gem 'devise'
+gem 'rmagick', require: false
 gem 'carrierwave'
 gem 'cancancan', '~> 1.10'
 gem 'bootstrap-sass', '~> 3.3.5'

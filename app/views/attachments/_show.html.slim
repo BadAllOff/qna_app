@@ -1,7 +1,14 @@
 p Attachments:
-ul
+ol.list-inline
   - attachments.each do |a|
-    li.answer_attachment= link_to a.file.identifier, a.file.url
-    - if user_signed_in? and a.attachable.user_id == current_user.id
-      - if can?(:destroy, a)
-        = link_to 'Delete', '#', remote: true, method: :delete
+    li.answer_attachment.col-xs-12.col-sm-3.col-md-3 id = "attachment-#{ a.id }"
+      .panel.panel-default
+        .panel-body.text-center
+          = image_tag a.file.url(:thumb).to_s, class: 'img-thumbnail'
+        .panel-footer
+          p.text-center
+            = link_to 'Show file', a.file.url, class: 'btn btn-default'
+            '&nbsp;
+            - if user_signed_in? and a.attachable.user_id == current_user.id
+              - if can?(:destroy, a)
+                = link_to 'Delete', attachment_path(a), remote: true, method: :delete, class: 'btn btn-danger'

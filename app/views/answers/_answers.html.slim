@@ -15,10 +15,10 @@
               'Vote down
           li.text-center
             -if answer.best_answer
+              i.glyphicon.glyphicon-star
               'Best answer
               -if can? :cancel_best, answer
                 = link_to cancel_best_question_answer_path(@question, answer), method: :patch, remote: true, class: 'btn btn-xs btn-info' do
-                  i.glyphicon.glyphicon-star
                   'Cancel accept answer
             -else
               -if can? :set_best, answer

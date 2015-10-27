@@ -22,7 +22,7 @@ feature 'Add files to answers', %q{
 
     expect(current_path).to eq question_path(question)
     within '.answer_attachment' do
-      expect(page).to have_link 'practice_makes_perfect.jpg', href: '/uploads/attachment/file/1/practice_makes_perfect.jpg'
+      expect(page).to have_link 'Show file', href: '/uploads/attachment/file/1/practice_makes_perfect.jpg'
     end
   end
 

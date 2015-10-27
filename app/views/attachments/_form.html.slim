@@ -1,6 +1,12 @@
-.form-group
-  = f.label :file
-  = f.file_field :file
-.form-group
-  = f.check_box :_destroy
-  = f.label :_destroy, " Remove"
+#attachments_form_container
+  = f.fields_for :attachments do |a|
+    .form-group
+      = a.label :file
+      = a.file_field :file
+      p.help-block.small
+        'Leave blank if not needed
+
+a.add_attachment_input_btn.btn.btn-xs.btn-primary data-controller="#{model}"
+  'Add new attachment field
+.clearfix
+br

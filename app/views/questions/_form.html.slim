@@ -13,6 +13,5 @@
     .form-group
       = f.label :body
       = f.text_field :body, class: 'form-control'
-    = f.fields_for :attachments do |a|
-      = render 'attachments/form', f: a
+    = render 'attachments/form', f: f, model: 'question'
     = f.submit class: 'btn btn-default'

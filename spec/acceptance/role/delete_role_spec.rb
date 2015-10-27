@@ -4,9 +4,9 @@ feature "Delete Role", %q{
         Only user can remove the role
   } do
 
-  given(:admin) { create(:user, role_sid: 'admin') }
-  given(:user)  { create(:user, role_sid: 'user') }
-  given(:role)  { create(:role) }
+  given (:user)   { create(:user) }
+  given (:admin)  { create(:user, role_sid: 'admin') }
+  given!(:role)   { create(:role) }
 
   scenario 'Admin delete role' do
     sign_in(admin)
@@ -31,7 +31,6 @@ feature "Delete Role", %q{
 
   scenario 'Non-authenticated user cannot delete role' do
     visit role_path(role)
-    expect(current_path).to eq root_path
-    expect(page).to have_content 'Action prohibited!'
+    expect(page).to_not have_link 'Delete'
   end
 end

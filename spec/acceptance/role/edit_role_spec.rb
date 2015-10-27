@@ -6,14 +6,9 @@ feature 'Role editing', %q{
         i'd like to be able to edit role
 } do
 
-  given(:user) {create(:user)}
-  given!(:role) {create(:role)}
-
-  scenario 'Un-authorised user try to edit role' do
-    visit role_path(role)
-
-    expect(page).to_not have_link 'Edit'
-  end
+  given (:user)   { create(:user) }
+  given (:admin)  { create(:user, role_sid: 'admin') }
+  given!(:role)   { create(:role) }
 
   describe 'Authenticated user' do
     before do
@@ -27,10 +22,19 @@ feature 'Role editing', %q{
       end
     end
 
-    scenario 'try to edit role' do
+    scenario 'cannot edit role' do
       click_on 'Edit'
         expect(page).to have_content 'Action prohibited!'
       end
+  end
+
+  describe 'Un-authorised user ' do
+    scenario 'cannot edit role' do
+      visit role_path(role)
+      expect(page).to_not have_link 'Edit'
     end
+  end
+
+
 
 end

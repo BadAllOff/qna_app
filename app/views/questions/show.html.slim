@@ -3,6 +3,7 @@ div.question
   p= @question.body
   - if @question.attachments.any?
     = render 'attachments/show', attachments: @question.attachments
+  .clearfix
   - if can? :update, @question
     p
       .btn-group

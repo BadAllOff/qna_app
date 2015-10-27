@@ -19,7 +19,7 @@ feature 'Add files to question', %q{
     attach_file 'File', "#{Rails.root}/spec/test_attachments/practice_makes_perfect.jpg"
     click_on 'Create'
 
-    expect(page).to have_link 'practice_makes_perfect.jpg', href: '/uploads/attachment/file/1/practice_makes_perfect.jpg'
+    expect(page).to have_link 'Show file', href: '/uploads/attachment/file/1/practice_makes_perfect.jpg'
   end
 
 
