@@ -7,14 +7,14 @@ This app based on main idea of stackowerflow: people can ask questions and creat
 
 **Actions mostly works without reload (ajax) New records appears on page without reload for all users (comet) Faye through private pub**
 
-**note done**
+**not done**
 
   - gem 'private_pub'
   - gem 'thin'
 
 **Authentication with Facebook & Twitter**
 
-**note done**
+**not done**
 
   - gem 'devise'
   - gem 'omniauth'
@@ -25,7 +25,7 @@ This app based on main idea of stackowerflow: people can ask questions and creat
 
 **App has REST API**
 
-**note done**
+**not done**
 
   - gem 'doorkeeper'
   - gem 'active_model_serializers'
@@ -36,7 +36,7 @@ This app based on main idea of stackowerflow: people can ask questions and creat
 
 **Background jobs (like email)**
 
-**note done**
+**not done**
 
   - gem 'sidekiq'
   - gem 'whenever'
@@ -44,14 +44,14 @@ This app based on main idea of stackowerflow: people can ask questions and creat
 
 **Redis for sidekiq and caching**
 
-**note done**
+**not done**
 
   - Fragment caching (Russian doll caching)
   - gem 'redis-rails'
 
 **Sphinx search**
 
-**note done**
+**not done**
 
   - gem 'thinking-sphinx'
 
@@ -77,14 +77,14 @@ This app based on main idea of stackowerflow: people can ask questions and creat
 
 **Ready to Deploy**
 
-**note done**
+**not done**
 
   - gem 'capistrano'
   - gem 'therubyracer'
 
 **Unicorn as production webserver**
 
-**note done**
+**not done**
 
   - gem 'unicorn'
 
@@ -95,7 +95,7 @@ This app based on main idea of stackowerflow: people can ask questions and creat
 
 ### Services (job queues, cache servers, search engines, etc.)
 
-**note done**
+**not done**
 
   - Postgres
   - Redis
@@ -105,6 +105,6 @@ This app based on main idea of stackowerflow: people can ask questions and creat
 
 ### Deployment instructions
 
-**note done**
+**not done**
 
   - cap production deploy
